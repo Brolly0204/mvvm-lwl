@@ -30,8 +30,8 @@ class Compiler {
           arr.forEach(key => {
             val = val[key];
           });
-          
-          new Watcher(vm, exp, function() { // 订阅者
+
+          new Watcher(vm, exp, function() { // 创建观察者watcher对象 
             template = node.template;
             node.texts.forEach(text => {
               let exp = reg.exec(text)[1]; // 表达式

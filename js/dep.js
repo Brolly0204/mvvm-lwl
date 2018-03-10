@@ -7,8 +7,11 @@ class Dep {
     this.subs.push(sub);
   }
 
+  getSub() {
+    return this.subs;
+  }
+
   notify() {
-    console.log(this.subs);
     this.subs.forEach(sub => sub.update());
   }
 }
@@ -18,12 +21,12 @@ class Watcher {
     this.fn = fn;
     this.exp = exp;
     this.vm = vm;
-    Dep.target = this; // 在getter中 需要添加watcher实例（dep.addDep(Dep.target)），所以需要缓存起来
+    Dep.target = this; // 缓存观察者 在getter时 需要将缓存的watcher对象添加到订阅器（dep.addDep(Dep.target)）
     let val = vm;
     let arr = exp.split('.');
 
     arr.forEach(k => {
-      val = val[k]; // 触发属性的getter 将当前实例Dep.target添加到订阅器中
+      val = val[k]; // 触发属性的getter 将当前实例watcher对象自身 添加到订阅器(dep)里面中
     });
     Dep.target = null;
   }

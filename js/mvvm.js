@@ -28,15 +28,16 @@ class Lwl {
     });
   }
 
+  // 被渲染的时候，因为会读取所需对象的值，所以会触发 getter 函数进行「依赖收集」，
+  //「依赖收集」的目的是将观察者 Watcher 对象存放到当前闭包中的订阅者 Dep 的 subs 中。
   defineReactive(data, key, val) {
     const that = this;
-    const dep = new Dep();
+    const dep = new Dep(); // 当前闭包中的订阅者
     that.observer(val); // 子属性如果是对象 也需要数据劫持
     Object.defineProperty(data, key, {
       enumerable: true,
-      get() {
-        Dep.target && dep.addSub(Dep.target); // 添加关于这个数据的watcher订阅者
-        console.log(dep.subs);
+      get() { // 依赖收集
+        Dep.target && (dep.addSub(Dep.target), dep.depName=key); // 将观察者 Watcher 对象存放到当前闭包中的订阅者 Dep 的 subs 中
         return val;
       },
       set(newVal) { // set执行说明 数据发生了改变
@@ -46,6 +47,7 @@ class Lwl {
         dep.notify(); // 通知所有的watcher 执行update方法
       }
     });
+
   }
   initComputed() { // 计算属性实现
     let vm = this;

@@ -1,38 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
 </head>
+
 <body>
   <div id="app">
-<!--     {{a}}
-<h3>{{c.id}}</h3>
-<div class="mess">
-  {{b}} = {{c.id}}
-</div> -->
+    {{a}}
+    <h3>{{c.id}}</h3>
+    <div class="mess">
+      {{b}} = {{c.id}}
+    </div>
     <input type="text" v-model="a">
     <p>{{say}}</p>
   </div>
-  <script src="./dep.js" charset="utf-8"></script>
-  <script src="./compiler.js" charset="utf-8"></script>
-  <script src="./mvvm.js" charset="utf-8"></script>
+  <script src="./js/dep.js" charset="utf-8"></script>
+  <script src="./js/compiler.js" charset="utf-8"></script>
+  <script src="./js/mvvm.js" charset="utf-8"></script>
   <script type="text/javascript">
     const vm = new Lwl({
       el: '#app',
       data: {
         a: 'hello',
         b: 'world',
-        c: {id: 24}
+        c: {
+          id: 24
+        }
       },
       computed: {
+        // say被渲染的时候生成say的watcher对象缓存到Dep.target里，对say读取时 需要依赖a，则会触发this.a的getter函数,a的getter里进行「依赖收集」dep.addSub(Dep.target)。 a的dep  Dep.target是say的watcher对象
+        // 则将say的观察者 Watcher 对象存放到当前 订阅者this.a 的 dep.subs 中
+        // this.a的值改变时 notify 通知 this.a订阅器中添加的watcher对象 进行更新
+        // 每个watcher对象都有一个update方法 notify时 则调用watcher对象的update方法里的回调 更新视图
         say() {
-          return this.a + this.b;
+          return this.a;
         }
       }
     })
   </script>
 </body>
+
 </html>
