@@ -1,3 +1,4 @@
+// 订阅者 Dep ，它的主要作用是用来存放 Watcher 观察者对象。
 class Dep {
   constructor() {
     this.subs = [];

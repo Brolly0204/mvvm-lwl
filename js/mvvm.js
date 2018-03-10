@@ -44,7 +44,7 @@ class Lwl {
         if(val === newVal) return;
         val = newVal;
         that.observer(val); // 如果直接赋的新值有可能是对象 也需要数据劫持
-        dep.notify(); // 通知所有的watcher 执行update方法
+        dep.notify(); // 触发对应Dep中的Watcher对象, Watcher 对象会调用对应的 update 来修改视图
       }
     });
 
