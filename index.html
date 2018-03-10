@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+<!--     {{a}}
+<h3>{{c.id}}</h3>
+<div class="mess">
+  {{b}} = {{c.id}}
+</div> -->
+    <input type="text" v-model="a">
+    <p>{{say}}</p>
+  </div>
+  <script src="./dep.js" charset="utf-8"></script>
+  <script src="./compiler.js" charset="utf-8"></script>
+  <script src="./mvvm.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    const vm = new Lwl({
+      el: '#app',
+      data: {
+        a: 'hello',
+        b: 'world',
+        c: {id: 24}
+      },
+      computed: {
+        say() {
+          return this.a + this.b;
+        }
+      }
+    })
+  </script>
+</body>
+</html>
