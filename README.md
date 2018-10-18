@@ -61,7 +61,7 @@ function defineReactive (obj, key, val) {
         enumerable: true,       /* 属性可枚举 */
         configurable: true,     /* 属性可被修改或删除 */
         get: function reactiveGetter () {
-            return val;         /* 实际上会依赖收集，下一小节会讲 */
+            return val;         /* 实际上会依赖收集 */
         },
         set: function reactiveSetter (newVal) {
             if (newVal === val) return;
